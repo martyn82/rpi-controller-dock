@@ -14,6 +14,4 @@ COPY conf.json /etc/rpi-controller/conf.json
 COPY supervisord.conf /etc/supervisord/conf.d/supervisord.conf
 
 # Entrypoint
-COPY start /start
-RUN chmod +x /start
-CMD ["/start"]
+CMD ["/controller-server"]
