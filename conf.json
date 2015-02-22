@@ -5,10 +5,26 @@
     },
     "Devices": [
         {
+            "Name": "shairport",
+            "Model": "SHAIRPORT-SYNC",
+            "Protocol": "unix",
+            "Address": "/tmp/shairport.sock"
+        },
+        {
             "Name": "denon",
             "Model": "DENON-AVR",
             "Protocol": "tcp",
             "Address": "10.0.0.46:23"
+        }
+    ],
+    "Actions": [
+        {
+            "When": "shairport:PLAY:START",
+            "Then": "SET denon:PW:ON"
+        },
+        {
+            "When": "shairport:PLAY:STOP",
+            "Then": "SET denon:PW:OFF"
         }
     ]
 }
