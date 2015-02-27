@@ -10,4 +10,4 @@ COPY controller-server /controller-server
 COPY conf.json /conf.json
 
 # Entrypoint
-CMD ["/controller-server", "-c conf.json"]
+CMD ["/controller-server", "-c=conf.json"]
