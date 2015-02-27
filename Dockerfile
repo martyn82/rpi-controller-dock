@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND noninteractive
 COPY controller-server /controller-server
 
 # Copy config
-COPY conf.json /etc/rpi-controller/conf.json
+COPY conf.json /conf.json
 
 # Entrypoint
-CMD ["/controller-server"]
+CMD ["/controller-server -c conf.json"]

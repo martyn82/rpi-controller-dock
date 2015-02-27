@@ -1,20 +1,24 @@
 {
     "Socket": {
-        "Type": "unix",
-        "Address": "/tmp/rpi-controller.sock"
+        "Type": "tcp",
+        "Address": ":1181"
     },
     "Devices": [
         {
             "Name": "shairport",
-            "Model": "SHAIRPORT-SYNC",
-            "Protocol": "unix",
-            "Address": "/tmp/shairport.sock"
+            "Model": "SHAIRPORT-SYNC"
         },
         {
             "Name": "denon",
             "Model": "DENON-AVR",
             "Protocol": "tcp",
             "Address": "10.0.0.46:23"
+        },
+        {
+            "Name": "tv",
+            "Model": "SAMSUNG-TV",
+            "Protocol": "tcp",
+            "Address": "10.0.0.38:55000"
         }
     ],
     "Actions": [
