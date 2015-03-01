@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND noninteractive
 COPY controller-server /controller-server
 
 # Copy config
-COPY conf.json /conf.json
+COPY server.conf.json /server.conf.json
 
 # Entrypoint
-CMD ["/controller-server", "-c=conf.json"]
+CMD ["/controller-server", "-c=server.conf.json"]
