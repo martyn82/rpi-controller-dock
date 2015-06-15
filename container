@@ -1,0 +1,37 @@
+#!/bin/bash
+
+set -e
+
+CMD=$1
+CNT=$2
+
+CMD_START="docker run -d -p 1181:1181 $CNT"
+CMD_STOP="docker stop $CNT"
+CMD_STATUS="docker ps"
+
+CMD_BUILD="docker build -t $CNT-build ./build"
+CMD_BUILD_RUN="docker run --rm=true -v $(pwd)/dist:/dist $CNT-build"
+CMD_BUILD_DIST="docker build -t $CNT ./dist"
+
+if [ -z "$CMD" ]; then
+    echo "Please specify a command."
+    exit 1
+fi
+
+if [ -z "$CNT" ]; then
+    echo "Please specify a container name."
+    exit 2
+fi
+
+case "$CMD" in
+    start )
+        $CMD_START ;;
+    stop )
+         $CMD_STOP ;;
+    build )
+         $CMD_BUILD && \
+         $CMD_BUILD_RUN && \
+         $CMD_BUILD_DIST ;;
+    status )
+         $CMD_STATUS | grep $CNT ;;
+esac
