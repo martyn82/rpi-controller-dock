@@ -1,5 +1,4 @@
-#FROM resin/rpi-raspbian:wheezy
-FROM library/ubuntu:14.04
+FROM resin/rpi-raspbian:wheezy
 MAINTAINER Martijn Endenburg <martijn.endenburg@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
