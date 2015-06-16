@@ -1,4 +1,5 @@
-FROM resin/rpi-raspbian:wheezy
+#FROM resin/rpi-raspbian:wheezy
+FROM library/ubuntu:14.04
 MAINTAINER Martijn Endenburg <martijn.endenburg@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -9,7 +10,7 @@ RUN groupadd -r user && \
 USER user
 
 # Copy binaries
-COPY controller-server /controller-server
+COPY bin/controller-server /controller-server
 
 # Copy config
 COPY server.conf.json /server.conf.json

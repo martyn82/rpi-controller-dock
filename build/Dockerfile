@@ -1,4 +1,5 @@
-FROM resin/rpi-raspbian:wheezy
+#FROM resin/rpi-raspbian:wheezy
+FROM library/ubuntu:14.04
 MAINTAINER Martijn Endenburg <martijn.endenburg@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -29,13 +30,10 @@ RUN mkdir ~/rpi-controller \
     && mv rpi-controller-master src/github.com/martyn82/rpi-controller \
     && export GOPATH=$(pwd) \
     && export GOBIN=$GOPATH/bin \
-    && $HOME/go/bin/go install src/github.com/martyn82/rpi-controller/server/controller-server.go \
-    && $HOME/go/bin/go install src/github.com/martyn82/rpi-controller/client/controller.go \
+    && ~/go/bin/go install src/github.com/martyn82/rpi-controller/server/controller-server.go \
+    && ~/go/bin/go install src/github.com/martyn82/rpi-controller/client/controller.go \
     && cd ~
 
-VOLUME "/dist"
+VOLUME "/build"
 
-COPY copy-artifacts.sh ./copy-artifacts.sh
-RUN chmod +x ./copy-artifacts.sh
-
-CMD ["./copy-artifacts.sh"]
+CMD cp ~/rpi-controller/bin/controller-server /build/bin/controller-server && cp ~/rpi-controller/bin/controller /build/bin/controller

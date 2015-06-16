@@ -6,15 +6,17 @@ CMD=$1
 CNT=$2
 
 CMD_START="docker run -d -p 1181:1181 $CNT"
-CMD_STOP="docker stop $CNT"
+CMD_STOP="docker stop $(docker ps -aq --filter=[name=$CNT])"
 CMD_STATUS="docker ps"
 
 CMD_BUILD="docker build -t $CNT-build ./build"
-CMD_BUILD_RUN="docker run --rm=true -v $(pwd)/dist:/dist $CNT-build"
+CMD_BUILD_RUN="docker run --rm=true -v $(pwd)/dist:/build $CNT-build"
 CMD_BUILD_DIST="docker build -t $CNT ./dist"
+CMD_CLEAN="docker rm -f $CNT-build"
+CMD_CLEAN_IMG="docker rmi $CNT-build"
 
 if [ -z "$CMD" ]; then
-    echo "Please specify a command."
+    echo "Please specify a command (start|stop|status|build|clean)."
     exit 1
 fi
 
@@ -32,6 +34,9 @@ case "$CMD" in
          $CMD_BUILD && \
          $CMD_BUILD_RUN && \
          $CMD_BUILD_DIST ;;
+    clean )
+        $CMD_CLEAN 2> /dev/null ; \
+        $CMD_CLEAN_IMG ;;
     status )
          $CMD_STATUS | grep $CNT ;;
 esac
