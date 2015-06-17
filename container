@@ -40,5 +40,5 @@ case "$CMD" in
         $CMD_CLEAN 2> /dev/null ; \
         $CMD_CLEAN_IMG ;;
     status )
-         $CMD_STATUS | grep $CNT ;;
+         $CMD_STATUS | grep $CNT || echo "Not running" ;;
 esac
