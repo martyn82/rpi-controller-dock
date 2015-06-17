@@ -1,3 +1,6 @@
+# This Dockerfile creates a containerized rpi-controller build instance.
+# It will compile and package a rpi-controller application.
+
 FROM resin/rpi-raspbian:wheezy
 MAINTAINER Martijn Endenburg <martijn.endenburg@gmail.com>
 
