@@ -35,9 +35,8 @@ RUN mkdir ~/rpi-controller \
     && export GOPATH=$(pwd) \
     && export GOBIN=$GOPATH/bin \
     && ~/go/bin/go install src/github.com/martyn82/rpi-controller/server/controller-server.go \
-    && ~/go/bin/go install src/github.com/martyn82/rpi-controller/client/controller.go \
     && cd ~
 
 RUN mkdir -p /build/bin
 
-CMD cp ~/rpi-controller/bin/controller-server /build/bin/controller-server && cp ~/rpi-controller/bin/controller /build/bin/controller
+CMD cp ~/rpi-controller/bin/controller-server /build/bin/controller-server
