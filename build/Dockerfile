@@ -6,6 +6,8 @@ MAINTAINER Martijn Endenburg <martijn.endenburg@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
+VOLUME "/build"
+
 # Install prerequisites
 RUN apt-get update
 RUN apt-get install -y \
@@ -36,6 +38,6 @@ RUN mkdir ~/rpi-controller \
     && ~/go/bin/go install src/github.com/martyn82/rpi-controller/client/controller.go \
     && cd ~
 
-VOLUME "/build"
+RUN mkdir -p /build/bin
 
 CMD cp ~/rpi-controller/bin/controller-server /build/bin/controller-server && cp ~/rpi-controller/bin/controller /build/bin/controller
