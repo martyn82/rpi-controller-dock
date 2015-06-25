@@ -1,0 +1,7 @@
+{
+    "Socket": {
+        "Type": "tcp",
+        "Address": ":1181"
+    },
+    "DatabaseFile": "/data/controllerd.db"
+}

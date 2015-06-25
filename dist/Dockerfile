@@ -6,18 +6,24 @@ MAINTAINER Martijn Endenburg <martijn.endenburg@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN groupadd -r user && \
-    useradd -r -g user user
-
-USER user
+RUN apt-get update && apt-get install -y sqlite3
 
 # Copy binaries
-COPY bin/controller-server /controller-server
+COPY bin/controllerd /controllerd
 
 # Copy config
-COPY server.conf.json /server.conf.json
+COPY controllerd.conf.json /controllerd.conf.json
+
+# Prepare DB
+RUN mkdir -p /schema
+RUN mkdir -p /data
+
+COPY schema/* /schema/
+COPY import_schema.sh /import_schema.sh
+COPY setup_db.sh /setup_db.sh
+RUN /setup_db.sh
 
 EXPOSE 1181
 
 # Entrypoint
-CMD ["/controller-server", "-c=server.conf.json"]
+CMD ["/controllerd", "-c=/controllerd.conf.json"]

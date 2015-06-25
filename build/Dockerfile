@@ -7,12 +7,15 @@ MAINTAINER Martijn Endenburg <martijn.endenburg@gmail.com>
 ENV DEBIAN_FRONTEND noninteractive
 
 VOLUME /build
+VOLUME /schema
 
 # Install prerequisites
 RUN apt-get update
 RUN apt-get install -y \
     gcc \
+    git-core \
     make \
+    mercurial \
     unzip \
     wget
 
@@ -26,15 +29,21 @@ RUN mkdir /go \
 
 # Build app
 RUN mkdir -p /rpi-controller \
+    && export GOPATH=/rpi-controller \
+    && export GOBIN=$GOPATH/bin \
     && wget --no-check-certificate -O /rpi-controller/rpi-controller.zip \
-        https://github.com/martyn82/rpi-controller/archive/master.zip \
+        https://github.com/martyn82/rpi-controller/archive/WIP/refactor.zip \
     && cd /rpi-controller \
     && unzip rpi-controller.zip \
     && mkdir -p src/github.com/martyn82 \
-    && mv rpi-controller-master src/github.com/martyn82/rpi-controller \
-    && export GOPATH=/rpi-controller \
-    && export GOBIN=$GOPATH/bin \
-    && /go/bin/go install src/github.com/martyn82/rpi-controller/server/controller-server.go \
+    && mv rpi-controller-WIP-refactor src/github.com/martyn82/rpi-controller \
+    && echo "Retrieving dependency: go-uuid..." && /go/bin/go get -d code.google.com/p/go-uuid || true \
+    && echo "Retrieving dependency: mattn/go-sqlite3..." && /go/bin/go get github.com/mattn/go-sqlite3 \
+    && echo "Retrieving dependency: martyn82/go-testing..." && /go/bin/go get -d github.com/martyn82/go-testing || true \
+    && echo "Retrieving dependency: stretchr/testify..." && /go/bin/go get github.com/stretchr/testify \
+    && echo "Running tests..." && cd src/github.com/martyn82/rpi-controller && /go/bin/go test -v ./... || true && cd - \
+    && echo "Compile and install server..." && /go/bin/go install src/github.com/martyn82/rpi-controller/server/controllerd.go \
     && cd ~
 
-CMD ["cp", "/rpi-controller/bin/controller-server", "/build/controller-server"]
+CMD cp /rpi-controller/bin/controllerd /build/controllerd \
+    && cp /rpi-controller/src/github.com/martyn82/rpi-controller/schema/* /schema
