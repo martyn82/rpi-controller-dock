@@ -32,11 +32,11 @@ RUN mkdir -p /rpi-controller \
     && export GOPATH=/rpi-controller \
     && export GOBIN=$GOPATH/bin \
     && wget --no-check-certificate -O /rpi-controller/rpi-controller.zip \
-        https://github.com/martyn82/rpi-controller/archive/WIP/refactor.zip \
+        https://github.com/martyn82/rpi-controller/archive/master.zip \
     && cd /rpi-controller \
     && unzip rpi-controller.zip \
     && mkdir -p src/github.com/martyn82 \
-    && mv rpi-controller-WIP-refactor src/github.com/martyn82/rpi-controller \
+    && mv rpi-controller-master src/github.com/martyn82/rpi-controller \
     && echo "Retrieving dependency: go-uuid..." && /go/bin/go get -d code.google.com/p/go-uuid || true \
     && echo "Retrieving dependency: mattn/go-sqlite3..." && /go/bin/go get github.com/mattn/go-sqlite3 \
     && echo "Retrieving dependency: martyn82/go-testing..." && /go/bin/go get -d github.com/martyn82/go-testing || true \
