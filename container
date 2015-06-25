@@ -33,6 +33,8 @@ case "$CMD" in
     stop )
          $CMD_STOP ;;
     build )
+        rm -rf -- $(pwd)/dist/bin && \
+        rm -rf -- $(pwd)/dist/schema && \
         mkdir -p $(pwd)/dist/bin && \
         mkdir -p $(pwd)/dist/schema && \
         $CMD_BUILD && \
